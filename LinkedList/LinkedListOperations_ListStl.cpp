@@ -60,6 +60,29 @@ public:
         return;
     }
 
+    // Insert a new node at a given position in linked list
+    void insert(int data, int pos)
+    {
+        Node *newNode = new Node(data);
+        if (head == NULL || pos == 0)
+        {
+            push_front(data);
+            return;
+        }
+        Node *curNode = head;
+        Node *prevNode = head;
+        int curPos = 0;
+        while (curPos != pos && curNode != NULL)
+        {
+            prevNode = curNode;
+            curNode = curNode->next;
+            ++curPos;
+        }
+        prevNode->next = newNode;
+        newNode->next = curNode;
+        return;
+    }
+
     // Print the linked list
     void print()
     {
@@ -79,6 +102,8 @@ int main()
     l.push_front(1);
     l.push_front(2);
     l.push_back(3);
+    l.insert(4, 0);
+    l.insert(5, 1);
     l.print();
     return 0;
 }
