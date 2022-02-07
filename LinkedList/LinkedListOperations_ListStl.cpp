@@ -83,6 +83,39 @@ public:
         return;
     }
 
+    // Helper method for search (Recursive Approach)
+    int lookForElement(int data, Node *curNode)
+    {
+        if (curNode == NULL)
+            return -1;
+        if (curNode->data == data)
+            return 0;
+        int pos = lookForElement(data, curNode->next);
+        if (pos == -1)
+            return pos;
+        return 1 + pos;
+    }
+
+    // Search an element in linked list and return its position. Return -1 if data element doesn't exist (Recursive Approach)
+    int search(int data)
+    {
+        return lookForElement(data, head);
+    }
+
+    // Search an element in linked list and return its position. Return -1 if data element doesn't exist (Iterative Approach)
+    int search_Iterative(int data)
+    {
+        int pos;
+        Node *temp = head;
+        for (pos = 0; temp != NULL; pos++)
+        {
+            if (temp->data == data)
+                return pos;
+            temp = temp->next;
+        }
+        return -1;
+    }
+
     // Print the linked list
     void print()
     {
@@ -105,5 +138,11 @@ int main()
     l.insert(4, 0);
     l.insert(5, 1);
     l.print();
+    std::cout << std::endl
+              << "Searching recursively, position of 5 in linked list : " << l.search(5);
+    std::cout << std::endl
+              << "Searching iteratively, position of 1 in linked list : " << l.search_Iterative(1);
+    std::cout << std::endl
+              << "Searching recursively, position of 10 in linked list : " << l.search(10);
     return 0;
 }
