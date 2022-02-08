@@ -1,6 +1,6 @@
 /*
 
-Cpp program to reverse a linked list
+Cpp program to merge nodes of one linked list in the alternate positions of the other linked list and return the head of the new merged linked list
 
 */
 
@@ -85,34 +85,32 @@ public:
         return;
     }
 
-    //*& is used so that ref. of variable is passed and can't be reassigned (changed)
-    void LinkedListReversal(Node *head)
+    // Merging nodes of root2 linked list in the alternate positions of this linked list
+    Node *AlternateMerge(Node *root2)
     {
-        if (head->next == NULL)
+        // Complete this function
+        Node *root1 = this->head;
+        Node *head = root1;
+        Node *temp1 = root1;
+        Node *temp2 = root2;
+        bool isFirstTurn = false;
+        while (temp1 != NULL && temp2 != NULL)
         {
-            this->head = head;
-            head->next;
-            return;
+            if (!isFirstTurn)
+            {
+                temp1 = root1->next;
+                root1->next = root2;
+                root1 = temp1;
+            }
+            else
+            {
+                temp2 = root2->next;
+                root2->next = root1;
+                root2 = temp2;
+            }
+            isFirstTurn = !isFirstTurn;
         }
-        Node *temp = head->next;
-        LinkedListReversal(head->next);
-        temp->next = head;
-        head->next = NULL;
-    }
-
-    void LinkedListReversal_Iteration() // Following iterative approach to reverse linked list
-    {
-        Node *curNode = head;
-        Node *nextNode = head;
-        Node *prevNode = NULL;
-        while (curNode != NULL)
-        {
-            nextNode = curNode->next;
-            curNode->next = prevNode;
-            prevNode = curNode;
-            curNode = nextNode;
-        }
-        head = prevNode;
+        return head;
     }
 
     // Print the linked list
@@ -129,19 +127,29 @@ public:
 
 int main()
 {
-    List l;
-    std::cout << "Linked List :" << std::endl;
+    List l, l2;
+    std::cout << std::endl
+              << "Linked List 1:" << std::endl;
     l.push_front(1);
     l.push_front(2);
     l.push_back(3);
+    l.push_back(4);
+    l.push_back(5);
+    l.push_back(6);
+    l.push_back(7);
     l.print();
-    l.LinkedListReversal(l.Begin());
     std::cout << std::endl
-              << "Linked List after reversal :" << std::endl;
-    l.print();
-    l.LinkedListReversal_Iteration();
+              << "Linked List 2:" << std::endl;
+    l2.push_front(13);
+    l2.push_front(12);
+    l2.push_back(8);
+    l2.push_back(6);
+    l2.push_back(9);
+    l2.print();
     std::cout << std::endl
-              << "Linked List after reversal (using Iterative approach) :" << std::endl;
+              << "Merging Linked List.... ";
+    l.AlternateMerge(l2.Begin());
+    std::cout << "Merged Linked List :" << std::endl;
     l.print();
     return 0;
 }

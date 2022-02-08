@@ -1,6 +1,6 @@
 /*
 
-Cpp program to reverse a linked list
+Cpp program to find kth element from the last of a Linked List
 
 */
 
@@ -85,34 +85,21 @@ public:
         return;
     }
 
-    //*& is used so that ref. of variable is passed and can't be reassigned (changed)
-    void LinkedListReversal(Node *head)
+    // Return position of kth element from the last
+    int KthLastElement(int k)
     {
-        if (head->next == NULL)
+        Node *temp1 = head;
+        for (int i = 0; i < k; i++)
         {
-            this->head = head;
-            head->next;
-            return;
+            temp1 = temp1->next;
         }
-        Node *temp = head->next;
-        LinkedListReversal(head->next);
-        temp->next = head;
-        head->next = NULL;
-    }
-
-    void LinkedListReversal_Iteration() // Following iterative approach to reverse linked list
-    {
-        Node *curNode = head;
-        Node *nextNode = head;
-        Node *prevNode = NULL;
-        while (curNode != NULL)
+        Node *temp2 = head;
+        while (temp1 != NULL)
         {
-            nextNode = curNode->next;
-            curNode->next = prevNode;
-            prevNode = curNode;
-            curNode = nextNode;
+            temp1 = temp1->next;
+            temp2 = temp2->next;
         }
-        head = prevNode;
+        return temp2->data;
     }
 
     // Print the linked list
@@ -129,19 +116,18 @@ public:
 
 int main()
 {
+    int k = 5;
     List l;
     std::cout << "Linked List :" << std::endl;
     l.push_front(1);
     l.push_front(2);
     l.push_back(3);
+    l.push_back(4);
+    l.push_back(5);
+    l.push_back(6);
+    l.push_back(7);
     l.print();
-    l.LinkedListReversal(l.Begin());
     std::cout << std::endl
-              << "Linked List after reversal :" << std::endl;
-    l.print();
-    l.LinkedListReversal_Iteration();
-    std::cout << std::endl
-              << "Linked List after reversal (using Iterative approach) :" << std::endl;
-    l.print();
+              << k << "th last element in Linked List : " << l.KthLastElement(k);
     return 0;
 }
