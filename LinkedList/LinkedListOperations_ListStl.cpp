@@ -53,6 +53,18 @@ public:
                   << "Linked List Deleted";
     }
 
+    // Return head of the Linked List
+    Node *Begin()
+    {
+        return head;
+    }
+
+    // Return tail of the Linked List
+    Node *End()
+    {
+        return tail;
+    }
+
     // Pushing a new node in front
     void push_front(int data)
     {
