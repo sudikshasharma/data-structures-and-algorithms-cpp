@@ -1,6 +1,6 @@
 /*
 
-Cpp program to create a queue using array and implement its basic operations like push, pop etc. using oop.
+Cpp program to create a queue (Circular queue) using array and implement its basic operations like push, pop etc. using oop.
 The given program is written in the way the actual class 'Queue' is defined in stl.
 
 */
@@ -30,6 +30,7 @@ public:
     {
         return currentSize == 0;
     }
+
     void push(T data)
     {
         if (!full())
