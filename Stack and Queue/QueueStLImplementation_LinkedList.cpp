@@ -1,6 +1,6 @@
 /*
 
-Cpp program to create a queue (of dynamic size) using linked list and implement its basic operations like push, pop etc. using oop.
+Cpp program to create a queue (of dynamic size as well as fixed size) using linked list and implement its basic operations like push, pop etc. using oop.
 The given program is written in the way the actual class 'Queue' is defined in stl.
 
 */
@@ -39,9 +39,14 @@ class Queue
 {
     Node<T> *front;
     Node<T> *rear;
+    int maxSize;
+    int curSize;
 
 public:
-    Queue() : front(NULL), rear(NULL) {}
+    // Queue with dynamic size
+    Queue() : front(NULL), rear(NULL), maxSize(0), curSize(0) {}
+    // Queue with fixed size
+    Queue(int defaultSize) : front(NULL), rear(NULL), maxSize(defaultSize), curSize(0) {}
 
     bool empty()
     {
@@ -50,12 +55,24 @@ public:
 
     void push(T data)
     {
-        Node<T> *newNode = new Node<T>(data);
-        if (front == NULL)
-            front = newNode;
+        std::cout
+            << std::endl
+            << "Pushing " << data;
+        if (maxSize == 0 || curSize < maxSize)
+        {
+            Node<T> *newNode = new Node<T>(data);
+            if (front == NULL)
+                front = newNode;
+            else
+                rear->next = newNode;
+            rear = newNode;
+            if (curSize < maxSize)
+                ++curSize;
+        }
         else
-            rear->next = newNode;
-        rear = newNode;
+            std::cout
+                << std::endl
+                << "Can't push " << data << ". Queue is full. This is a fixed size queue ";
     }
 
     void pop()
@@ -66,6 +83,8 @@ public:
             front = tempNode->next;
             tempNode->next = NULL;
             delete tempNode;
+            if (maxSize != 0)
+                --curSize;
         }
     }
 
@@ -83,20 +102,38 @@ public:
 
 int main()
 {
-    Queue<char> queue;
+    int size = 3;
+    Queue<char> queue(size);
+    Queue<char> dynamicQueue;
     std::cout << std::endl
-              << "Creating character queue .... ";
+              << "Creating character queue with fixed size " << size;
     queue.push('s');
     queue.push('u');
     queue.push('d');
     queue.push('o');
     std::cout << std::endl
-              << "Queue created...popping and printing elements :";
+              << "Fixed size queue created...popping and printing elements :";
     while (!queue.empty())
     {
         std::cout << std::endl
                   << queue.getFront();
         queue.pop();
+    }
+    std::cout << std::endl
+              << "Creating character queue with dynamic size ";
+    dynamicQueue.push('o');
+    dynamicQueue.push('u');
+    dynamicQueue.push('d');
+    dynamicQueue.push('s');
+    dynamicQueue.push('h');
+    std::cout << std::endl
+              << "Dynamic size queue created...popping and printing elements :";
+    while (!dynamicQueue.empty())
+    {
+        std::cout << std::endl
+                  << "Popping "
+                  << dynamicQueue.getFront();
+        dynamicQueue.pop();
     }
     return 0;
 }
