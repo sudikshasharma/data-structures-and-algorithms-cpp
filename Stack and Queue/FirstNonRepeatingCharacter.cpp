@@ -1,7 +1,7 @@
 /*
 
 Given a stream of characters and we have to find first non repeating character each time a
-character is inserted to the stream.
+character is inserted to the stream. Use queue to do so.
 
 Examples:
 Input  : a a b c
@@ -46,7 +46,7 @@ vector<char> FirstNonRepeating(vector<char> str)
     return str;
 }
 
-void print(vector<char> str)
+void Print(vector<char> str)
 {
     for (int i = 0; i < str.size(); i++)
     {
@@ -59,10 +59,10 @@ int main()
     vector<char> str = {'a', 'a', 'a', 'c', 'c'};
     std::cout << std::endl
               << "Given String : ";
-    print(str);
+    Print(str);
     str = FirstNonRepeating(str);
     std::cout << std::endl
               << "String after processing repeating characters : ";
-    print(str);
+    Print(str);
     return 0;
 }
